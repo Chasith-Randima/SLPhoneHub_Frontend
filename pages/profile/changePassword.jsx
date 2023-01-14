@@ -12,7 +12,7 @@ import Breadcrum from "../../components/Breadcrum";
 import Layout from "../../components/Layout";
 import Sidebar from "../../components/Sidebar";
 
-const changePassword = () => {
+const ChangePassword = () => {
   const [values, setValues] = useState({
     passwordCurrent: "",
     password: "",
@@ -58,7 +58,7 @@ const changePassword = () => {
             passwordConfirm: "",
           });
 
-          console.log(data);
+          // console.log(data);
           return data;
         } else {
           setAlert({
@@ -166,4 +166,4 @@ const changePassword = () => {
   );
 };
 
-export default changePassword;
+export default ChangePassword;

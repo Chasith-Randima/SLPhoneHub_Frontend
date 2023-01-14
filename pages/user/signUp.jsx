@@ -5,7 +5,7 @@ import Router from "next/router";
 import { isAuth, signup } from "../../actions/auth";
 import Link from "next/link";
 
-const signUp = () => {
+const SignUp = () => {
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -34,7 +34,7 @@ const signUp = () => {
       if (data == undefined) {
         setValues({ ...values, error: data, loading: false });
       } else {
-        console.log(data);
+        // console.log(data);
         setValues({
           ...values,
           name: "",
@@ -182,4 +182,4 @@ const signUp = () => {
   );
 };
 
-export default signUp;
+export default SignUp;

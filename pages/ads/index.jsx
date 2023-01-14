@@ -11,7 +11,7 @@ import SearchSection from "../../components/SearchSection";
 
 let search = "top";
 
-const index = ({ adds_list, results, totalCount }) => {
+const Index = ({ adds_list, results, totalCount }) => {
   // console.log(totalCount);
   const [filter, setFilter] = useState(false);
   const [adds, setAdds] = useState(adds_list);
@@ -539,7 +539,7 @@ const index = ({ adds_list, results, totalCount }) => {
   );
 };
 
-index.getInitialProps = async () => {
+Index.getInitialProps = async () => {
   let page = 1;
   let limit = 9;
   let brandname;
@@ -568,4 +568,4 @@ index.getInitialProps = async () => {
   });
 };
 
-export default withRouter(index);
+export default withRouter(Index);

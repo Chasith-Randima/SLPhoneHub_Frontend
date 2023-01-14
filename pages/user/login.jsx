@@ -6,7 +6,7 @@ import Router from "next/router";
 import Message from "../../components/Message";
 import Link from "next/link";
 
-const login = () => {
+const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -170,4 +170,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

@@ -7,7 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import Breadcrum from "../../components/Breadcrum";
 import Message from "../../components/Message";
 
-const profile = () => {
+const Profile = () => {
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -43,7 +43,7 @@ const profile = () => {
     e.preventDefault();
 
     setValues({ ...values, [name]: e.target.value });
-    console.log(values);
+    // console.log(values);
   };
 
   const updateSubmit = () => {
@@ -155,4 +155,4 @@ const profile = () => {
 //   });
 // };
 
-export default profile;
+export default Profile;

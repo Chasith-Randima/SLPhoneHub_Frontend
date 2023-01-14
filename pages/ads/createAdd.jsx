@@ -9,7 +9,7 @@ import { createAccessory } from "../../actions/accessory";
 import Breadcrum from "../../components/Breadcrum";
 import Sidebar from "../../components/Sidebar";
 
-const createAdd = () => {
+const CreateAdd = () => {
   const [values, setValues] = useState({
     name: "",
     user: "",
@@ -107,12 +107,12 @@ const createAdd = () => {
     }
   }, [router.isReady]);
   // console.log(mobile, wanted, accessory);
-  console.log(values);
+  // console.log(values);
   const handleChange = (name, type) => (e) => {
     e.preventDefault();
     let value = name == "images" ? e.target.files[0] : e.target.value;
     if (type == "mobile") {
-      console.log(name, values, e.target.value);
+      // console.log(name, values, e.target.value);
       // formData.apend(name, value);
       if (name == "images") {
         formData.append(name, value);
@@ -121,10 +121,10 @@ const createAdd = () => {
         setValues({ ...values, [name]: value });
       }
 
-      console.log(values);
+      // console.log(values);
     } else if (type == "accessory") {
       // let value = name == "images" ? e.target.files[0] : e.target.value;
-      console.log(name, values, e.target.value);
+      // console.log(name, values, e.target.value);
       // formData.apend(name, value);
       if (name == "images") {
         formDataAccessory.append(name, value);
@@ -175,7 +175,7 @@ const createAdd = () => {
     for (const key in phone) {
       formData.append(key, phone[key]);
       setValues({ ...values, formData });
-      console.log(`${key}: ${phone[key]}`);
+      // console.log(`${key}: ${phone[key]}`);
     }
 
     return createPhone(values.formData, token)
@@ -183,7 +183,7 @@ const createAdd = () => {
         // console.log(data);
 
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.push(`/ads`);
         } else {
           setAlert({
@@ -219,13 +219,13 @@ const createAdd = () => {
     for (const key in accessory) {
       formDataAccessory.append(key, accessory[key]);
       setValues({ ...values, formDataAccessory });
-      console.log(`${key}: ${accessory[key]}`);
+      // console.log(`${key}: ${accessory[key]}`);
     }
 
     return createAccessory(accessoryValues.formDataAccessory, token)
       .then((data) => {
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.push(`/ads`);
         } else {
           setAlert({
@@ -257,7 +257,7 @@ const createAdd = () => {
     return createWanted(wanted, token)
       .then((data) => {
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.push(`/ads`);
         } else {
           setAlert({
@@ -1113,4 +1113,4 @@ const createAdd = () => {
   );
 };
 
-export default createAdd;
+export default CreateAdd;

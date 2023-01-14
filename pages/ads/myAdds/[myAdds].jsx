@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Breadcrum from "../../../components/Breadcrum";
 
-const myAdds = ({ adds, user }) => {
+const MyAdds = ({ adds, user }) => {
   const [accessories, setAccessories] = useState([]);
   const [wanted, setWanted] = useState([]);
 
@@ -25,7 +25,7 @@ const myAdds = ({ adds, user }) => {
     allMyAccessories(user)
       .then((data) => {
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           setAccessories([...data.doc]);
         } else {
           setAlert({
@@ -42,7 +42,7 @@ const myAdds = ({ adds, user }) => {
 
     allMyWanted(user)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         if (data.status == "success") {
           setWanted([...data.doc]);
@@ -63,10 +63,10 @@ const myAdds = ({ adds, user }) => {
     let token = getCookie("token");
     return deletePhone(id, token)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.reload();
           return data;
         } else {
@@ -87,7 +87,7 @@ const myAdds = ({ adds, user }) => {
     return deleteAccessory(id, token)
       .then((data) => {
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.reload();
           return data;
         } else {
@@ -108,7 +108,7 @@ const myAdds = ({ adds, user }) => {
     return deleteWanted(id, token)
       .then((data) => {
         if (data.data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.reload();
           return data;
         } else {
@@ -190,7 +190,7 @@ const myAdds = ({ adds, user }) => {
             );
           })}
           {accessories.map((add, key) => {
-            console.log(add, "asscesoory");
+            // console.log(add, "asscesoory");
             return (
               <>
                 {/* <!-- single wishlist --> */}
@@ -288,7 +288,7 @@ const myAdds = ({ adds, user }) => {
   );
 };
 
-myAdds.getInitialProps = ({ query }) => {
+MyAdds.getInitialProps = ({ query }) => {
   let user = query.myAdds;
 
   return allMyAdds(user).then((data) => {
@@ -296,4 +296,4 @@ myAdds.getInitialProps = ({ query }) => {
   });
 };
 
-export default myAdds;
+export default MyAdds;

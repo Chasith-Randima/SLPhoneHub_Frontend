@@ -10,7 +10,7 @@ import Layout from "../../../components/Layout";
 import Sidebar from "../../../components/Sidebar";
 import Router from "next/router";
 
-const updateAdd = ({ add, type }) => {
+const UpdateAdd = ({ add, type }) => {
   const [alert, setAlert] = useState({
     message: "",
     error: "",
@@ -96,7 +96,7 @@ const updateAdd = ({ add, type }) => {
     e.preventDefault();
     if (type == "mobile") {
       let value = name == "images" ? e.target.files[0] : e.target.value;
-      console.log(name, values, e.target.value);
+      // console.log(name, values, e.target.value);
       // formData.apend(name, value);
       if (name == "images") {
         formData.append(name, value);
@@ -105,11 +105,11 @@ const updateAdd = ({ add, type }) => {
         setValues({ ...values, [name]: value });
       }
 
-      console.log(values);
+      // console.log(values);
       // setValues({ ...values, [name]: e.target.value });
     } else if (type == "accessory") {
       let value = name == "images" ? e.target.files[0] : e.target.value;
-      console.log(name, values, e.target.value);
+      // console.log(name, values, e.target.value);
       // formData.apend(name, value);
       if (name == "images") {
         formDataAccessory.append(name, value);
@@ -157,15 +157,15 @@ const updateAdd = ({ add, type }) => {
     for (const key in phone) {
       formData.append(key, phone[key]);
       setValues({ ...values, formData });
-      console.log(`${key}: ${phone[key]}`);
+      // console.log(`${key}: ${phone[key]}`);
     }
 
-    console.log(phone);
+    // console.log(phone);
     let addId = add._id;
     return updatePhone(addId, values.formData, token)
       .then((data) => {
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
         } else {
@@ -202,15 +202,15 @@ const updateAdd = ({ add, type }) => {
     for (const key in accessory) {
       formDataAccessory.append(key, accessory[key]);
       setAccessoryValues({ ...values, formDataAccessory });
-      console.log(`${key}: ${accessory[key]}`);
+      // console.log(`${key}: ${accessory[key]}`);
     }
 
     let addId = add._id;
     return updateAccessory(addId, accessoryValues.formDataAccessory, token)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
         } else {
@@ -240,9 +240,9 @@ const updateAdd = ({ add, type }) => {
     let addId = add._id;
     return updateWanted(addId, wanted, token)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.status == "success") {
-          console.log(data);
+          // console.log(data);
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
         } else {
@@ -1133,7 +1133,7 @@ const updateAdd = ({ add, type }) => {
   );
 };
 
-updateAdd.getInitialProps = ({ query }) => {
+UpdateAdd.getInitialProps = ({ query }) => {
   if (query.updateAdd[1] == "mobile") {
     return onePhone(query.updateAdd[0]).then((data) => {
       return { add: data.doc, type: query.updateAdd[1] };
@@ -1149,4 +1149,4 @@ updateAdd.getInitialProps = ({ query }) => {
   }
 };
 
-export default updateAdd;
+export default UpdateAdd;

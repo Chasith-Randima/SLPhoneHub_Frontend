@@ -7,7 +7,7 @@ import Message from "../../components/Message";
 
 let search = "top";
 
-const oneProduct = ({ add }) => {
+const OneProduct = ({ add }) => {
   const [related, setRelated] = useState([]);
   const [imageIndex, setImageIndex] = useState(0);
   let new_one = Object.keys(add);
@@ -25,7 +25,7 @@ const oneProduct = ({ add }) => {
     };
     allPhones(paramsData)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.data.status == "success") {
           setRelated([...related, ...data.data.doc]);
         } else {
@@ -70,7 +70,7 @@ const oneProduct = ({ add }) => {
               width="10"
               height="20"
             /> */}
-          {console.log(add.images)}
+          {/* {console.log(add.images)} */}
           <img
             src="./images/NoImage_Image.jpg"
             alt=""
@@ -314,7 +314,7 @@ const oneProduct = ({ add }) => {
   );
 };
 
-oneProduct.getInitialProps = async ({ query }) => {
+OneProduct.getInitialProps = async ({ query }) => {
   // console.log(query);
   return await onePhone(query.slug)
     .then((data) => {
@@ -325,4 +325,4 @@ oneProduct.getInitialProps = async ({ query }) => {
     });
 };
 
-export default oneProduct;
+export default OneProduct;

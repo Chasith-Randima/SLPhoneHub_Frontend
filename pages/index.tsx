@@ -14,7 +14,7 @@ let search = "mid";
 export default function Home() {
   return (
     <>
-      <Layout search={search}>
+      <Layout search={search} filterOn={""} filter={""}>
         <div className="flex pt-20 justify-center container py-16">
           <SearchSection search={search} />
         </div>
