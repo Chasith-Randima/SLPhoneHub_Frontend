@@ -1,0 +1,41 @@
+{
+  "name": "cell_phones_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/font": "13.1.1",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.10",
+    "autoprefixer": "^10.4.13",
+    "axios": "^1.2.2",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.1.1",
+    "file-loader": "^6.2.0",
+    "fontawesome": "^5.6.3",
+    "isomorphic-fetch": "^3.0.0",
+    "js-cookie": "^3.0.1",
+    "moment": "^2.29.4",
+    "next": "13.1.1",
+    "postcss": "^8.4.20",
+    "query-string": "^8.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "^3.2.4",
+    "typescript": "4.9.4",
+    "url-loader": "^4.1.1"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "child_process": false,
+    "net": false
+  }
+}
