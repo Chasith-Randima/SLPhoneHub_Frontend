@@ -4,6 +4,7 @@ import Layout from "./../../components/Layout";
 import { onePhone, allPhones } from "../../actions/ads";
 import SingleAdd from "../../components/adds/SingleAdd";
 import Message from "../../components/Message";
+import Breadcrum from "../../components/Breadcrum";
 
 let search = "top";
 
@@ -14,10 +15,12 @@ const OneProduct = ({ add }) => {
 
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
   useEffect(() => {
+    setAlert({ ...alert, loading: true });
     let paramsData = {
       limit: 4,
       page: 1,
@@ -28,12 +31,23 @@ const OneProduct = ({ add }) => {
         // console.log(data);
         if (data.data.status == "success") {
           setRelated([...related, ...data.data.doc]);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
         } else {
           setAlert({
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
@@ -41,10 +55,10 @@ const OneProduct = ({ add }) => {
         setAlert({
           ...alert,
           loading: false,
-          message: data.message,
-          error: data.error,
+          message: err.message,
+          error: true,
+          success: false,
         });
-        console.log(err);
       });
   }, []);
 
@@ -129,9 +143,9 @@ const OneProduct = ({ add }) => {
     <>
       <Layout search={search}>
         {/* <!-- bread crums --> */}
-        {alert.error && <Message message={alert.error} display={true} />}
+        {/* {alert.error && <Message message={alert.error} display={true} />} */}
 
-        <div className="container py-4 flex items-center gap-3">
+        {/* <div className="container py-4 flex items-center gap-3">
           <a href="#" className="text-primary text-base">
             <i className="fas fa-home"></i>
           </a>
@@ -139,7 +153,14 @@ const OneProduct = ({ add }) => {
             <i className="fas fa-chevron-right"> </i>
           </span>
           <p className="text-gray-600 font-medium">Product View</p>
-        </div>
+        </div> */}
+        <Breadcrum title={"Product View"} />
+
+        {alert.success && <Message message={alert.message} display={true} />}
+        {alert.error && <Message message={alert.error} display={true} />}
+        {alert.loading && (
+          <Message message={"Loading Please Waite..."} display={true} />
+        )}
 
         {/* <!-- product view --> */}
         {/* <div className="container grid grid-cols-[repeat(1,_900px)_100px] gap-4"> */}

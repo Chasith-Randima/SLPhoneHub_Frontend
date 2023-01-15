@@ -3,7 +3,7 @@ import fetch from "isomorphic-fetch";
 let API = process.env.NEXT_PUBLIC_API_DEVELOPMENT;
 
 export const getProfile = (id, token) => {
-  console.log(token, id, "from user action");
+  // console.log(token, id, "from user action");
   let url = `${API}/users/${id}`;
 
   return fetch(url, {
@@ -18,12 +18,13 @@ export const getProfile = (id, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
 export const updateProfile = (id, user, token) => {
   let url = `${API}/users/${id}`;
-  console.log(id, user, token, "from the actions");
+  // console.log(id, user, token, "from the actions");
 
   return fetch(url, {
     method: "PATCH",
@@ -35,10 +36,11 @@ export const updateProfile = (id, user, token) => {
     body: JSON.stringify(user),
   })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return response.json();
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };

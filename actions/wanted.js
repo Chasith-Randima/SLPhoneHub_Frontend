@@ -23,6 +23,7 @@ export const createWanted = (wanted, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -37,6 +38,7 @@ export const allWanted = () => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -55,6 +57,7 @@ export const deleteWanted = (id, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -69,7 +72,14 @@ export const updateWanted = (id, wanted, token) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(wanted),
-  });
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
 };
 
 export const oneWanted = (id) => {
@@ -83,6 +93,7 @@ export const oneWanted = (id) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -98,5 +109,6 @@ export const allMyWanted = (user) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };

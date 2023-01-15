@@ -24,6 +24,7 @@ export const signup = async (user) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -42,6 +43,7 @@ export const logIn = async (user) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -54,10 +56,12 @@ export const logOut = async (next) => {
     method: "GET",
   })
     .then((response) => {
-      console.log("Logout Success");
+      // console.log("Logout Success");
+      return response;
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -135,5 +139,6 @@ export const updateMyPassword = (id, user, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };

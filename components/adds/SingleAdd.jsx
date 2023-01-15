@@ -3,7 +3,7 @@ import moment from "moment";
 import Link from "next/link";
 
 const SingleAdd = ({ add }) => {
-  console.log(add);
+  // console.log(add);
   return (
     <>
       <div className="bg-white shadow rounded overflow-hidden group">

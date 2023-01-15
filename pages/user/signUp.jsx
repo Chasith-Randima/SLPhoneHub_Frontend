@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import Router from "next/router";
 import { isAuth, signup } from "../../actions/auth";
 import Link from "next/link";
+import Message from "../../components/Message";
 
 const SignUp = () => {
   const [values, setValues] = useState({
@@ -14,6 +15,13 @@ const SignUp = () => {
     error: "",
     loading: false,
     message: "",
+  });
+
+  const [alert, setAlert] = useState({
+    message: "",
+    error: false,
+    loading: false,
+    success: false,
   });
 
   useEffect(() => {
@@ -27,27 +35,56 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
     setValues({ ...values, loading: true, error: false });
     // console.log(values);
     const user = { name, email, password, passwordConfirm };
-    signup(user).then((data) => {
-      if (data == undefined) {
-        setValues({ ...values, error: data, loading: false });
-      } else {
-        // console.log(data);
-        setValues({
-          ...values,
-          name: "",
-          email: "",
-          password: "",
-          passwordConfirm: "",
-          error: "",
+    signup(user)
+      .then((data) => {
+        if (data.status && data.status == "success") {
+          // console.log(data);
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            passwordConfirm: "",
+            error: "",
+            loading: false,
+            message: data.statusText,
+          });
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
+
+          Router.push(`/user/login`);
+        } else {
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: true,
+            success: false,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setAlert({
+          ...alert,
           loading: false,
-          message: data.statusText,
+          message: data.message,
+          error: true,
+          success: false,
         });
-        Router.push(`/user/login`);
-      }
-    });
+      });
   };
 
   const handleChange = (name) => (e) => {
@@ -67,9 +104,10 @@ const SignUp = () => {
         {/* <!-- Login --> */}
 
         <div class="container py-16">
-          {showError()}
+          {/* {showError()}
           {showLoading()}
-          {showMessage()}
+          {showMessage()} */}
+
           <div class="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
             <h2 class="text-2xl uppercase font-medium mb-1">SignUp</h2>
             <p class="text-gray-600 mb-6 text-sm">Signup to our website</p>
@@ -136,6 +174,18 @@ const SignUp = () => {
                     Forgot Password
                   </a>
                 </div> */}
+                {alert.error && (
+                  <Message message={alert.message} display={true} />
+                )}
+                {alert.success && (
+                  <Message message={alert.message} display={true} />
+                )}
+                {alert.loading && (
+                  <Message
+                    message={"Loading...Please Waite..."}
+                    display={true}
+                  />
+                )}
                 <div class="mt-4">
                   <button
                     class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"

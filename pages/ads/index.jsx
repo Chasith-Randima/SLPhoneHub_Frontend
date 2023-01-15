@@ -25,14 +25,15 @@ const Index = ({ adds_list, results, totalCount }) => {
     maxPrice: undefined,
   });
 
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(9);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(totalCount / limit));
 
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
 
   const { success, error, body } = values;
@@ -114,6 +115,7 @@ const Index = ({ adds_list, results, totalCount }) => {
 
   const filterSet = () => {
     // console.log(price);
+    setAlert({ ...alert, loading: true });
     let paramsData = {
       limit,
       page,
@@ -132,16 +134,27 @@ const Index = ({ adds_list, results, totalCount }) => {
     }
     // console.log(paramsData);
     return allPhones(paramsData).then((data) => {
-      if (data.data.status == "success") {
+      if (data.data.status && data.data.status == "success") {
         setAdds([...data.data.doc]);
         totalCount = data.data.totalCount;
         setTotalPages(Math.ceil(totalCount / limit));
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: false,
+          success: true,
+        });
+        window.setTimeout(() => {
+          setAlert({ ...alert, success: false, message: "" });
+        }, 1500);
       } else {
         setAlert({
           ...alert,
           loading: false,
           message: data.message,
-          error: data.error,
+          error: true,
+          success: false,
         });
       }
       // console.log(totalCount);
@@ -426,6 +439,13 @@ const Index = ({ adds_list, results, totalCount }) => {
             </div>
 
             {/* <!-- product grid --> */}
+            {alert.error && <Message message={alert.message} display={true} />}
+            {/* {alert.success && (
+              <Message message={alert.message} display={true} />
+            )}
+            // {alert.loading && (
+            //   <Message message={"Loading...Please Waite..."} display={true} />
+            // )} */}
             <div className="grid md:grid-cols-3 gap-6">
               {/* <!-- single product --> */}
 

@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Breadcrum from "../../../components/Breadcrum";
+import Message from "../../../components/Message";
 
 const MyAdds = ({ adds, user }) => {
   const [accessories, setAccessories] = useState([]);
@@ -17,77 +18,146 @@ const MyAdds = ({ adds, user }) => {
 
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
 
   useEffect(() => {
+    setAlert({ ...alert, loading: true });
     allMyAccessories(user)
       .then((data) => {
-        if (data.status == "success") {
+        if (data.status && data.status == "success") {
           // console.log(data);
           setAccessories([...data.doc]);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
         } else {
           setAlert({
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
-
+    setAlert({ ...alert, loading: true });
     allMyWanted(user)
       .then((data) => {
         // console.log(data);
 
-        if (data.status == "success") {
+        if (data.status && data.status == "success") {
           setWanted([...data.doc]);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
         } else {
           setAlert({
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   }, []);
   const deleteOnClick = (id) => {
+    setAlert({ ...alert, loading: true });
     let token = getCookie("token");
     return deletePhone(id, token)
       .then((data) => {
         // console.log(data);
 
-        if (data.status == "success") {
+        if (data.status && data.status == "success") {
           // console.log(data);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           Router.reload();
+
           return data;
         } else {
           setAlert({
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   };
   const deleteAccessoryClick = (id) => {
+    setAlert({ ...alert, loading: true });
     let token = getCookie("token");
     return deleteAccessory(id, token)
       .then((data) => {
         if (data.status == "success") {
           // console.log(data);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           Router.reload();
           return data;
         } else {
@@ -95,20 +165,39 @@ const MyAdds = ({ adds, user }) => {
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   };
   const deleteWantedClick = (id) => {
+    setAlert({ ...alert, loading: true });
     let token = getCookie("token");
     return deleteWanted(id, token)
       .then((data) => {
         if (data.data.status == "success") {
           // console.log(data);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           Router.reload();
           return data;
         } else {
@@ -116,12 +205,20 @@ const MyAdds = ({ adds, user }) => {
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: err.message,
+          error: true,
+          success: false,
+        });
       });
   };
   return (
@@ -141,6 +238,12 @@ const MyAdds = ({ adds, user }) => {
 
         {/* <!-- account content --> */}
         <div class="order-1 md:order-2 col-span-9 mt-6 lg:mt-0 space-y-4">
+          {alert.error && <Message message={alert.message} display={true} />}
+          {alert.success && <Message message={alert.message} display={true} />}
+          {alert.loading && (
+            <Message message={"Loading..Please Waite..."} display={true} />
+          )}
+
           {adds.map((add, key) => {
             return (
               <>

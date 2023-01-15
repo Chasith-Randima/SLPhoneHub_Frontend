@@ -11,6 +11,7 @@ import {
 import Breadcrum from "../../components/Breadcrum";
 import Layout from "../../components/Layout";
 import Sidebar from "../../components/Sidebar";
+import Message from "../../components/Message";
 
 const ChangePassword = () => {
   const [values, setValues] = useState({
@@ -21,8 +22,9 @@ const ChangePassword = () => {
 
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const ChangePassword = () => {
 
   const submitPasswordUpdate = (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
     let user = {
       passwordCurrent: values.passwordCurrent,
       password: values.password,
@@ -49,7 +52,7 @@ const ChangePassword = () => {
     let token = getCookie("token");
     return updateMyPassword(values.id, user, token)
       .then((data) => {
-        if ((data.status = "success")) {
+        if (data.status && data.status == "success") {
           removeCookie("token");
           setCookie("token", data.token);
           setValues({
@@ -57,6 +60,16 @@ const ChangePassword = () => {
             password: "",
             passwordConfirm: "",
           });
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
 
           // console.log(data);
           return data;
@@ -65,12 +78,20 @@ const ChangePassword = () => {
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   };
   return (
@@ -147,6 +168,15 @@ const ChangePassword = () => {
                   </div>
                 </div>
               </div>
+              {alert.error && (
+                <Message message={alert.message} display={true} />
+              )}
+              {alert.success && (
+                <Message message={alert.message} display={true} />
+              )}
+              {alert.loading && (
+                <Message message={"Loading...Please Waite..."} display={true} />
+              )}
               <div className="mt-6">
                 <button
                   type="submit"

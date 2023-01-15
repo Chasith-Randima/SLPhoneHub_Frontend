@@ -3,6 +3,7 @@ import { useState } from "react";
 import { searchPhones } from "../actions/ads";
 import Router from "next/router";
 import Message from "../components/Message";
+// import ErrorBoundary from "./ErrorBoundary";
 
 const SearchSection = ({ search }) => {
   const [values, setValues] = useState({
@@ -14,18 +15,20 @@ const SearchSection = ({ search }) => {
 
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
 
   let { searchState, results, searched, message } = values;
 
   const searchSubmit = async (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
 
     await searchPhones({ search: searchState })
       .then((data) => {
-        if (data.status == "success")
+        if (data.status && data.status == "success")
           // console.log(data);
           setValues({
             ...values,
@@ -33,6 +36,16 @@ const SearchSection = ({ search }) => {
             searched: true,
             message: `${data.data.length} adds found..`,
           });
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: false,
+          success: true,
+        });
+        window.setTimeout(() => {
+          setAlert({ ...alert, success: false, message: "" });
+        }, 1500);
 
         // if (data.data.status == "success") {
         //   setRelated([...related, ...data.data.doc]);
@@ -50,7 +63,8 @@ const SearchSection = ({ search }) => {
           ...alert,
           loading: false,
           message: data.message,
-          error: err,
+          error: true,
+          success: false,
         });
       });
   };
@@ -78,7 +92,7 @@ const SearchSection = ({ search }) => {
             : "w-1/3 bg-white flex flex-col mt-5 justify-center xl:max-w-xl lg:max-w-lg lg:flex   absolute top-10 left-1/3 z-10"
         }
       >
-        {alert.error && <Message message={alert.error} display={true} />}
+        {alert.error && <Message message={alert.message} display={true} />}
         {message && (
           <h3 className="w-2/3 text-primary p-2 justify-self-center mx-auto">
             {message}
@@ -114,6 +128,7 @@ const SearchSection = ({ search }) => {
 
   return (
     <>
+      {/* <ErrorBoundary> */}
       <div
         className={
           search && search == "top"
@@ -139,7 +154,9 @@ const SearchSection = ({ search }) => {
 
         {/* {searchResults()} */}
       </div>
+      {alert.error && <Message message={alert.message} display={true} />}
       {searchState && searchResults(results)}
+      {/* </ErrorBoundary> */}
     </>
   );
 };

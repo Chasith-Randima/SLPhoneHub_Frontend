@@ -16,6 +16,13 @@ const Login = () => {
     showForm: true,
   });
 
+  const [alert, setAlert] = useState({
+    message: "",
+    error: false,
+    loading: false,
+    success: false,
+  });
+
   useEffect(() => {
     if (isAuth()) {
       Router.push(`/`);
@@ -26,21 +33,26 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
 
     await logIn(user)
       .then((data) => {
         // console.log(data);
-        if (data.status == "success") {
-          setValues({
-            ...values,
-            error: "",
+        if (data.status && data.status == "success") {
+          data.data.token = data.token;
+          setAlert({
+            ...alert,
             loading: false,
             message: data.message,
+            error: false,
+            success: true,
           });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
 
-          data.data.token = data.token;
           // console.log(data);
           // console.log(data.error);
           authenticate(data.data, () => {
@@ -49,21 +61,23 @@ const Login = () => {
             }
           });
         } else {
-          setValues({
-            ...values,
+          setAlert({
+            ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
-        setValues({
-          ...values,
+        setAlert({
+          ...alert,
           loading: false,
           message: data.message,
-          error: data.error,
+          error: true,
+          success: false,
         });
       });
   };
@@ -83,7 +97,7 @@ const Login = () => {
             <p class="text-gray-600 mb-6 text-sm">
               Login if you are a returning customer
             </p>
-            {error && <Message message={message} display={true} />}
+
             <form action="">
               <div class="space-y-4">
                 <div>
@@ -124,6 +138,18 @@ const Login = () => {
                     Forgot Password
                   </a>
                 </div> */}
+                {alert.error && (
+                  <Message message={alert.message} display={true} />
+                )}
+                {alert.success && (
+                  <Message message={alert.message} display={true} />
+                )}
+                {alert.loading && (
+                  <Message
+                    message={"Loading...Please Waite..."}
+                    display={true}
+                  />
+                )}
                 <div class="mt-4">
                   <button
                     class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"

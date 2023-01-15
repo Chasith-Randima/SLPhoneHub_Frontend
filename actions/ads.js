@@ -28,7 +28,10 @@ export const createPhone = (phone, token) => {
     .then((response) => {
       return response.json();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
 };
 
 // limit,
@@ -88,6 +91,7 @@ export const allPhones = (paramsData) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -105,6 +109,7 @@ export const deletePhone = (id, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -126,6 +131,7 @@ export const updatePhone = (id, phone, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -140,6 +146,7 @@ export const onePhone = (id) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -158,6 +165,7 @@ export const allMyAdds = (user) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -177,5 +185,6 @@ export const searchPhones = (params) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };

@@ -21,6 +21,7 @@ export const createAccessory = (accessory, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -35,6 +36,7 @@ export const allAccessory = () => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -53,12 +55,13 @@ export const deleteAccessory = (id, token) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
 export const updateAccessory = (id, accessory, token) => {
   let url = `${API}/accessories/${id}`;
-  console.log("It was called");
+  // console.log("It was called");
 
   return fetch(url, {
     method: "PATCH",
@@ -70,11 +73,12 @@ export const updateAccessory = (id, accessory, token) => {
     body: accessory,
   })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return response.json();
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -89,6 +93,7 @@ export const oneAccessory = (id) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 
@@ -104,5 +109,6 @@ export const allMyAccessories = (user) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };

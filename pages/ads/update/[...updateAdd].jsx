@@ -9,12 +9,14 @@ import Breadcrum from "../../../components/Breadcrum";
 import Layout from "../../../components/Layout";
 import Sidebar from "../../../components/Sidebar";
 import Router from "next/router";
+import Message from "../../../components/Message";
 
 const UpdateAdd = ({ add, type }) => {
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
   const [values, setValues] = useState({
     name: "",
@@ -74,6 +76,7 @@ const UpdateAdd = ({ add, type }) => {
 
   useEffect(() => {
     add.images = undefined;
+    setAlert({ ...alert, loading: true });
 
     if (type == "mobile") {
       setMobile(true);
@@ -90,6 +93,7 @@ const UpdateAdd = ({ add, type }) => {
       setWanted(true);
       setWantedValues({ ...values, ...add });
     }
+    setAlert({ ...alert, loading: false });
   }, []);
 
   const handleChange = (name) => (e) => {
@@ -130,6 +134,7 @@ const UpdateAdd = ({ add, type }) => {
 
   const updateAddClick = (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
     let token = getCookie("token");
     let phone = {
       name: values.name,
@@ -164,7 +169,17 @@ const UpdateAdd = ({ add, type }) => {
     let addId = add._id;
     return updatePhone(addId, values.formData, token)
       .then((data) => {
-        if (data.status == "success") {
+        if (data.status && data.status == "success") {
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           // console.log(data);
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
@@ -173,16 +188,25 @@ const UpdateAdd = ({ add, type }) => {
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   };
   const updateAccessoryClick = (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
     let token = getCookie("token");
     let accessory = {
       name: accessoryValues.name,
@@ -209,7 +233,17 @@ const UpdateAdd = ({ add, type }) => {
     return updateAccessory(addId, accessoryValues.formDataAccessory, token)
       .then((data) => {
         // console.log(data);
-        if (data.status == "success") {
+        if (data.status && data.status == "success") {
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           // console.log(data);
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
@@ -218,16 +252,25 @@ const UpdateAdd = ({ add, type }) => {
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   };
   const updateWantedClick = (e) => {
     e.preventDefault();
+    setAlert({ ...alert, loading: true });
     let token = getCookie("token");
     let wanted = {
       name: wantedValues.name,
@@ -241,8 +284,18 @@ const UpdateAdd = ({ add, type }) => {
     return updateWanted(addId, wanted, token)
       .then((data) => {
         // console.log(data);
-        if (data.status == "success") {
+        if (data.status && data.status == "success") {
           // console.log(data);
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
         } else {
@@ -250,12 +303,20 @@ const UpdateAdd = ({ add, type }) => {
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
       .catch((err) => {
         console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
       });
   };
 
@@ -692,6 +753,13 @@ const UpdateAdd = ({ add, type }) => {
                   />
                 </div> */}
             </div>
+            {alert.error && <Message message={alert.message} display={true} />}
+            {alert.success && (
+              <Message message={alert.message} display={true} />
+            )}
+            {alert.loading && (
+              <Message message={"Loading...Please Waite..."} display={true} />
+            )}
             <div className="mt-6">
               <button
                 type="submit"
@@ -951,6 +1019,13 @@ const UpdateAdd = ({ add, type }) => {
                   />
                 </div> */}
             </div>
+            {alert.error && <Message message={alert.message} display={true} />}
+            {alert.success && (
+              <Message message={alert.message} display={true} />
+            )}
+            {alert.loading && (
+              <Message message={"Loading...Please Waite..."} display={true} />
+            )}
             <div className="mt-6">
               <button
                 type="submit"
@@ -1093,6 +1168,13 @@ const UpdateAdd = ({ add, type }) => {
                   />
                 </div> */}
             </div>
+            {alert.error && <Message message={alert.message} display={true} />}
+            {alert.success && (
+              <Message message={alert.message} display={true} />
+            )}
+            {alert.loading && (
+              <Message message={"Loading..Please Waite..."} display={true} />
+            )}
             <div className="mt-6">
               <button
                 type="submit"

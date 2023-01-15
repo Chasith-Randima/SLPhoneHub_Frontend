@@ -18,8 +18,9 @@ const Profile = () => {
 
   const [alert, setAlert] = useState({
     message: "",
-    error: "",
+    error: false,
     loading: false,
+    success: false,
   });
 
   // const userId = JSON.parse(isAuth())._id;
@@ -29,14 +30,43 @@ const Profile = () => {
   }, []);
 
   const init = () => {
+    setAlert({ ...alert, loading: true });
     const token = getCookie("token");
     const userId = isAuth()._id;
-    return getProfile(userId, token).then((data) => {
-      // console.log(data);
-      if (data) {
-        setValues({ ...values, name: data.doc.name, email: data.doc.email });
-      }
-    });
+    return getProfile(userId, token)
+      .then((data) => {
+        if (data.status && data.status == "success") {
+          setValues({ ...values, name: data.doc.name, email: data.doc.email });
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
+        } else {
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: true,
+            success: false,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setAlert({
+          ...alert,
+          loading: false,
+          message: data.message,
+          error: true,
+          success: false,
+        });
+      });
   };
 
   const handleChange = (name) => (e) => {
@@ -47,6 +77,7 @@ const Profile = () => {
   };
 
   const updateSubmit = () => {
+    setAlert({ ...alert, loading: true });
     const token = getCookie("token");
     const userId = isAuth()._id;
     let user = {
@@ -57,14 +88,25 @@ const Profile = () => {
     return updateProfile(userId, user, token)
       .then((data) => {
         // console.log(data);
-        if (data.status) {
+        if (data.status && data.status == "success") {
+          setAlert({
+            ...alert,
+            loading: false,
+            message: data.message,
+            error: false,
+            success: true,
+          });
+          window.setTimeout(() => {
+            setAlert({ ...alert, success: false, message: "" });
+          }, 1500);
           return data;
         } else {
           setAlert({
             ...alert,
             loading: false,
             message: data.message,
-            error: data.error,
+            error: true,
+            success: false,
           });
         }
       })
@@ -74,7 +116,8 @@ const Profile = () => {
           ...alert,
           loading: false,
           message: data.message,
-          error: data.error,
+          error: true,
+          success: false,
         });
       });
   };
@@ -126,6 +169,15 @@ const Profile = () => {
                   />
                 </div>
               </div>
+              {alert.error && (
+                <Message message={alert.message} display={true} />
+              )}
+              {alert.success && (
+                <Message message={alert.message} display={true} />
+              )}
+              {alert.loading && (
+                <Message message={"Loading...Please Waite..."} display={true} />
+              )}
 
               {/* <!-- form row end --> */}
               <div className="mt-4">
