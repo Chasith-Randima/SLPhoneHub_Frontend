@@ -7,8 +7,6 @@ import Link from "next/link";
 import Layout from "./../components/Layout";
 import SearchSection from "./../components/SearchSection";
 
-// const inter = Inter({ subsets: ["latin"] });
-
 let search = "mid";
 
 export default function Home() {
