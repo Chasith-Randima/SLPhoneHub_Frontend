@@ -37,7 +37,7 @@ const SignUp = () => {
     e.preventDefault();
     setAlert({ ...alert, loading: true });
     setValues({ ...values, loading: true, error: false });
-    // console.log(values);
+
     const user = { name, email, password, passwordConfirm };
     signup(user)
       .then((data) => {
