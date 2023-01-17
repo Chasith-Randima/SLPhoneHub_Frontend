@@ -39,7 +39,6 @@ const Login = () => {
 
     await logIn(user)
       .then((data) => {
-        // console.log(data);
         if (data.status && data.status == "success") {
           data.data.token = data.token;
           setAlert({
