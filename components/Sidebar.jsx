@@ -67,7 +67,6 @@ const Sidebar = () => {
             </Link>
             <Link
               href={`/profile/changePassword`}
-              // onClick={()=>}
               class="hover:text-primary transition capitalize block"
             >
               Change Password

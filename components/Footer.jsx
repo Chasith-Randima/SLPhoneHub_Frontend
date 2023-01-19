@@ -9,7 +9,6 @@ const Footer = () => {
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             {/* <!-- footer text --> */}
             <div className="xl:col-span-1 space-y-8">
-              {/* <img src="./images/logo.svg" alt="" className="w-30" /> */}
               <Link
                 href="/"
                 className="font-bold text-2xl text-gray-500 hover:text-primary transition"

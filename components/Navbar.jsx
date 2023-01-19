@@ -8,8 +8,6 @@ import Link from "next/link";
 import Router from "next/router";
 import SearchSection from "./SearchSection";
 
-// console.log(isAuth());
-
 const Navbar = ({ search }) => {
   const [show, setShow] = useState();
   // const [values, setValues] = useState({
