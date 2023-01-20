@@ -132,7 +132,7 @@ const Index = ({ adds_list, results, totalCount }) => {
     if (paramsData.location && paramsData.location == "All") {
       delete paramsData.location;
     }
-    // console.log(paramsData);
+
     return allPhones(paramsData).then((data) => {
       if (data.data.status && data.data.status == "success") {
         setAdds([...data.data.doc]);
