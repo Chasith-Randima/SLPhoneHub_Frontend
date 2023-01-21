@@ -38,9 +38,6 @@ const SingleAdd = ({ add }) => {
           </Link>
           <div className="flex items-baseline mb-1 space-x-2 font-roboto">
             <p className="text-xl text-primary font-semibold">{add.location}</p>
-            {/* <p className="text-sm text-gray-400 line-through">
-                    Category
-                  </p> */}
           </div>
           <div className="flex justify-between items-center">
             {/* <div className="flex gap-1 text-sm text-yellow-400">

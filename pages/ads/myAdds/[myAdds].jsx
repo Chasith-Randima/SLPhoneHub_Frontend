@@ -63,8 +63,6 @@ const MyAdds = ({ adds, user }) => {
     setAlert({ ...alert, loading: true });
     allMyWanted(user)
       .then((data) => {
-        // console.log(data);
-
         if (data.status && data.status == "success") {
           setWanted([...data.doc]);
           setAlert({
