@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { oneAccessory, updateAccessory } from "../../../actions/accessory";
-// import { update } from "../../../../cell_phones/models/wantedModel";
+
 import { onePhone, updatePhone } from "../../../actions/ads";
 import { getCookie, isAuth } from "../../../actions/auth";
 import { oneWanted, updateWanted } from "../../../actions/wanted";
