@@ -244,7 +244,7 @@ const UpdateAdd = ({ add, type }) => {
           window.setTimeout(() => {
             setAlert({ ...alert, success: false, message: "" });
           }, 1500);
-          // console.log(data);
+
           Router.push(`/ads`);
           // setAccessories([...data.doc]);
         } else {
