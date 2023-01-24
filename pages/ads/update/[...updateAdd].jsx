@@ -285,7 +285,6 @@ const UpdateAdd = ({ add, type }) => {
       .then((data) => {
         // console.log(data);
         if (data.status && data.status == "success") {
-          // console.log(data);
           setAlert({
             ...alert,
             loading: false,
