@@ -81,7 +81,7 @@ const CreateAdd = () => {
 
     if (router.isReady) {
       let { type } = router.query;
-      // console.log(type);
+
       if (type == "mobile") {
         setMobile(true);
         setValues({
