@@ -124,8 +124,6 @@ const CreateAdd = () => {
       } else {
         setValues({ ...values, [name]: value });
       }
-
-      // console.log(values);
     } else if (type == "accessory") {
       // let value = name == "images" ? e.target.files[0] : e.target.value;
       // console.log(name, values, e.target.value);
