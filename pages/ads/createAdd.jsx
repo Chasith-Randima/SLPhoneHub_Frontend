@@ -236,7 +236,6 @@ const CreateAdd = () => {
       location: accessoryValues.location,
       phoneNumber: accessoryValues.phoneNumber,
       price: accessoryValues.price,
-      // images: accessoryValues.images,
     };
     for (const key in accessory) {
       formDataAccessory.append(key, accessory[key]);
