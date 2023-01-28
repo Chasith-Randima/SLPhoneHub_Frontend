@@ -33,9 +33,6 @@ const selectAdType = () => {
                 >
                   POST
                 </a>
-                {/* <a href="#" class="text-primary">
-                  Edit
-                </a> */}
               </div>
               {/* <div class="space-y-1">
                 <h4 class="text-gray-700 font-medium">Russell Ahmed</h4>
