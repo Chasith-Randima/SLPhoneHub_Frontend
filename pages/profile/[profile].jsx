@@ -23,8 +23,6 @@ const Profile = () => {
     success: false,
   });
 
-  // const userId = JSON.parse(isAuth())._id;
-
   useEffect(() => {
     init();
   }, []);
