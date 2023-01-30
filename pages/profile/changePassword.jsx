@@ -71,7 +71,6 @@ const ChangePassword = () => {
             setAlert({ ...alert, success: false, message: "" });
           }, 1500);
 
-          // console.log(data);
           return data;
         } else {
           setAlert({
