@@ -8,7 +8,7 @@ const account = () => {
     <>
       <Layout>
         <Breadcrum title={"My Account"} />
-        {/* <!-- account wrapper --> */}
+        {/* <!-- account wraper --> */}
         <div class="container grid grid-cols-3 lg:grid-cols-12 items-start gap-6 pt-4 pb-16">
           {/* <!-- sidebar --> */}
           <div className="col-span-3 order-2 md:order-1">
@@ -25,7 +25,7 @@ const account = () => {
 
           {/* <!-- account content end --> */}
         </div>
-        {/* <!-- account wrapper end --> */}
+        {/* <!-- account wraper end --> */}
       </Layout>
     </>
   );
