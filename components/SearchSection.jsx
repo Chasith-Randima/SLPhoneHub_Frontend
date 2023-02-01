@@ -29,7 +29,6 @@ const SearchSection = ({ search }) => {
     await searchPhones({ search: searchState })
       .then((data) => {
         if (data.status && data.status == "success")
-          // console.log(data);
           setValues({
             ...values,
             results: data.data,
