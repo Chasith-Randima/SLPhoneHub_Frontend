@@ -13,8 +13,6 @@ if (process.env.NEXT_PUBLIC_PRODUCTION == true) {
 export const createPhone = (phone, token) => {
   let url = `${API}/phones`;
 
-  // console.log(url);
-
   return fetch(url, {
     method: "POST",
     headers: {
