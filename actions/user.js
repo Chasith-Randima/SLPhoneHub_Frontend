@@ -24,7 +24,6 @@ export const getProfile = (id, token) => {
 
 export const updateProfile = (id, user, token) => {
   let url = `${API}/users/${id}`;
-  // console.log(id, user, token, "from the actions");
 
   return fetch(url, {
     method: "PATCH",
@@ -36,7 +35,6 @@ export const updateProfile = (id, user, token) => {
     body: JSON.stringify(user),
   })
     .then((response) => {
-      // console.log(response);
       return response.json();
     })
     .catch((err) => {
