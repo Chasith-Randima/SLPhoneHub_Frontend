@@ -20,7 +20,7 @@ class ErrorBoundary extends Component {
       return (
         <Message
           message={
-            "Something Went wrong...Try reloading or going back to homepate..."
+            "Something Went wrong...Try reloading or going back to homepate.."
           }
           display={true}
         />
